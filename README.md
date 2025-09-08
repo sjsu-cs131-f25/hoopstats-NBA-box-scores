@@ -1,1 +1,1 @@
-# team1-sports-stats
+# hoopstats-NBA-box-scores
