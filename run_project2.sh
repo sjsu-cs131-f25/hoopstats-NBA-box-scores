@@ -15,7 +15,7 @@ echo "Creating 1k sample with header: "
 head -n 1 $DATASET_FILE > data/samples/sample.csv                     
 tail -n +2 $DATASET_FILE | shuf -n 1000 >> data/samples/sample.csv
 
-#2. Frequency table (Column 21)
+#2. Frequency table (Column 21)(Also used for column 24 and 27)
 echo "Creating Frequency Table 1: "
 tail -n +2 $DATASET_FILE | cut -d',' -f21 | sort | uniq -c | sort -nr | tee $OUT/freq_col21.txt
 
