@@ -1,5 +1,5 @@
 #!/bin/bash
-#run_preject2.sh
+#run_project2.sh
 #Usage bash -x run_porject2.sh <team_name> <dataset_file>
 #Generates sample, frequency tables, Top-N, and logs into out/
 #Used a CSV file, comma delimiter
