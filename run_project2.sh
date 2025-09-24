@@ -10,6 +10,8 @@ OUT=out
 cd /mnt/scratch/CS131_jelenag/projects/${TEAM_NAME}/
 mkdir -p $OUT data/samples
 
+script -a project2_session.txt
+
 #1. Create 1k sample with header
 echo "Creating 1k sample with header: "
 head -n 1 $DATASET_FILE > data/samples/sample.csv                     
@@ -23,4 +25,8 @@ tail -n +2 $DATASET_FILE | cut -d',' -f21 | sort | uniq -c | sort -nr | tee $OUT
 echo "Top 20 list"
 tail -n +2 $DATASET_FILE | cut -d',' -f17 | sort -nr | uniq -c | head -n 20 | tee $OUT/top20_col17.txt
 
+#4. 3 Column Skinny Table, deduped
+head -n 1 $DATASET_FILE | cut -d',' -f1-3 > $OUT/skinny_table.csv
+tail -n +2 $DATASET_FILE | cut -d',' -f1-3 | sort -u | tee $OUT/skinny_table_body.csv | tee -a $OUT/skinny_table.csv > /dev/null
 
+exit
