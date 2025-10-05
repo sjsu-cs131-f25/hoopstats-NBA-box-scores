@@ -1,6 +1,6 @@
 #!/bin/bash
-#run_project2.sh
-#Usage bash -x run_project2.sh <team_name> <dataset_file>
+#run_project3.sh
+#Usage bash -x run_project3.sh <team_name> <dataset_file>
 #define relationships and edges, extract clusters, plot distributions, compare Top-N tokens, summarize clusters,  and logs into out/
 
 
