@@ -98,22 +98,24 @@ awk 'NR==FNR {if($2>=5) years[$1]; next} FNR>1 {if($1 in years) print}' $OUT/ent
 
 #Step 5: Created PNG Visual using Gephi
 
-#Step 6: Compute cluster summmary statistics
-echo "Computing cluster summary statisitocs"
-#Remove CSV header & convert CSV to TSV
+# Step 6: Compute cluster summary statistics
+echo "Computing cluster summary statistics"
+
+# Remove CSV header & convert CSV to TSV
 tail -n +2 "$DATASET_FILE" | tr ',' '\t' > "$OUT/dataset_noheader.tsv"
 
-#Sort edges and dataset by RightEntity ID
+# Sort edges and dataset by RightEntity ID (player ID)
 sort -k2,2 "$OUT/edges_thresholded.tsv" > "$OUT/edges_sorted.tsv"
 sort -k3,3 "$OUT/dataset_noheader.tsv" > "$OUT/dataset_sorted.tsv"
 
-#Join edges with dataset, extract LeftEntity + numeric outcome (assume column 16)
-join -t $'\t' -1 2 -2 3 "$OUT/edges_sorted.tsv" "$OUT/dataset_sorted.tsv" | cut -f1,16 > "$OUT/leftentity_numeric.tsv"
+# Join edges with dataset, extract gameYear (col 5) + threePointersAttempted (col 24)
+# After join, field 2 is gameYear and field 21 is threePointersAttempted (because join merges columns)
+join -t $'\t' -1 2 -2 3 "$OUT/edges_sorted.tsv" "$OUT/dataset_sorted.tsv" | awk -F'\t' '{print $2 "\t" $21}' > "$OUT/leftentity_numeric.tsv"
 
-#Remove empty numeric values
+# Remove empty numeric values
 awk -F'\t' '$2 != ""' "$OUT/leftentity_numeric.tsv" > "$OUT/leftentity_numeric_clean.tsv"
 
-#Compute summary statistics: count, mean, median per LeftEntity
+# Compute summary statistics: count, mean, median per gameYear
 sort -k1,1n "$OUT/leftentity_numeric_clean.tsv" | datamash -g 1 count 2 mean 2 median 2 > "$OUT/cluster_outcomes.tsv"
 
 set -euo pipefail
