@@ -110,7 +110,8 @@ sort -k3,3 "$OUT/dataset_noheader.tsv" > "$OUT/dataset_sorted.tsv"
 
 # Join edges with dataset, extract gameYear (col 5) + threePointersAttempted (col 24)
 # After join, field 2 is gameYear and field 21 is threePointersAttempted (because join merges columns)
-join -t $'\t' -1 2 -2 3 "$OUT/edges_sorted.tsv" "$OUT/dataset_sorted.tsv" | awk -F'\t' '{print $2 "\t" $21}' > "$OUT/leftentity_numeric.tsv"
+join -t $'\t' -1 2 -2 3 "$OUT/edges_sorted.tsv" "$OUT/dataset_sorted.tsv" \
+  | awk -F'\t' '{print $6 "\t" $24}' > "$OUT/leftentity_numeric.tsv"
 
 # Remove empty numeric values
 awk -F'\t' '$2 != ""' "$OUT/leftentity_numeric.tsv" > "$OUT/leftentity_numeric_clean.tsv"
