@@ -21,8 +21,8 @@ sed -E 's/([0-9]{4})-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}/\1/' $DATASET_
 #---Step 1
 #Extract edges and sort by left entity, format to tsv
 echo "Extracting edges and formatiing to tsv"
-head -n 1 data/samples/playerstats_1k_year.csv | cut -d',' -f5,3 | sed 's/,/\t/' > $OUT/edges.tsv
-awk -F',' 'NR>1 {print $5 "\t" $3}' data/samples/playerstats_1k_year.csv | sort -nr >> $OUT/edges.tsv
+head -n 1 data/samples/playerstats_1k_year.csv | awk -F',' '{print $5 "\t" $3}' > $OUT/edges.tsv
+awk -F',' 'NR>1 {print $5 "\t" $3}' data/samples/playerstats_1k_year.csv | sort >> $OUT/edges.tsv
 
 
 
@@ -41,7 +41,8 @@ awk 'NR==FNR {if($2>=5) years[$1]; next} FNR>1 {if($1 in years) print}' $OUT/ent
 
 #Step 5: Created PNG Visual using Gephi
 
-#Step 6: Compute cluster summary statistics
+#Step 6: Compute cluster summmary statistics
+echo "Computing cluster summary statisitocs"
 #Remove CSV header & convert CSV to TSV
 tail -n +2 "$DATASET_FILE" | tr ',' '\t' > "$OUT/dataset_noheader.tsv"
 
