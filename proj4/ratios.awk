@@ -37,4 +37,3 @@ END {
         printf "%s\t%.3f\t%d\t%s\n", id, avg, games[id], bucket
     }
 }
-
