@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# !/usr/bin/env bash
 # Usage: ./run_pa4.sh data/{csv}
 
 set -euo pipefail
